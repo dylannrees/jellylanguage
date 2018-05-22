@@ -2667,10 +2667,6 @@ atoms = {
 		arity = 0,
 		call = lambda: list(str_digit)
 	),
-	'ØE': attrdict(
-		arity = 0,
-		call = lambda: list('BCDFGHJKLMNPQRSTVWXYZbcdfghjklmnpqrstvwxyz')
-	),
 	'ØẸ': attrdict(
 		arity = 0,
 		call = lambda: list('bcdfghjklmnpqrstvwxyz')
