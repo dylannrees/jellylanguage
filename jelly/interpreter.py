@@ -352,6 +352,18 @@ def group_equal(array):
 			groups.append([x])
 	return groups
 
+def group_lengths(array):
+	array = iterable(array, make_digits = True)
+	lengths = []
+	previous_item = None
+	for x in array:
+		if lengths and previous_item == x:
+			lengths[-1] += 1
+		else:
+			lengths.append(1)
+		previous_item = x
+	return lengths
+
 def identity(argument):
 	return argument
 
@@ -2240,10 +2252,6 @@ atoms = {
 		arity = 1,
 		call = permutation_index
 	),
-	'Œœ': attrdict(
-		arity = 1,
-		call = odd_even
-	),
 	'ŒB': attrdict(
 		arity = 1,
 		ldepth = 1,
@@ -2407,6 +2415,15 @@ atoms = {
 		arity = 1,
 		ldepth = 1,
 		call = lambda z: to_case(z, upper = True)
+	),
+	'Œœ': attrdict(
+		arity = 1,
+		call = odd_even
+	),
+	'Œɠ': attrdict(
+		arity = 1,
+		ldepth = 1,
+		call = group_lengths
 	),
 	'œ?': attrdict(
 		arity = 2,
