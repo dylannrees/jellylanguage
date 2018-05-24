@@ -667,6 +667,10 @@ def ntimes(links, args, cumulative = False):
 		rarg = larg
 	return cumret + [ret] if cumulative else ret
 
+def odd_even(array):
+	array = iterable(array, make_range = True)
+	return [[t for t in array[::2]], [t for t in array[1::2]]]
+
 def order(number, divisor):
 	if number == 0 or abs(divisor) == 1:
 		return inf
@@ -2223,6 +2227,10 @@ atoms = {
 		arity = 1,
 		call = lambda z: jellify(itertools.permutations(iterable(z, make_range = True)))
 	),
+	'Œ¡': attrdict(
+		arity = 1,
+		call = lambda z: list(sympy.utilities.iterables.multiset_permutations(iterable(z, make_digits = True)))
+	),
 	'Œ?': attrdict(
 		arity = 1,
 		ldepth = 0,
@@ -2231,6 +2239,10 @@ atoms = {
 	'Œ¿': attrdict(
 		arity = 1,
 		call = permutation_index
+	),
+	'Œœ': attrdict(
+		arity = 1,
+		call = odd_even
 	),
 	'ŒB': attrdict(
 		arity = 1,
