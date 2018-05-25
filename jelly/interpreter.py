@@ -2239,10 +2239,6 @@ atoms = {
 		arity = 1,
 		call = lambda z: jellify(itertools.permutations(iterable(z, make_range = True)))
 	),
-	'Œ¡': attrdict(
-		arity = 1,
-		call = lambda z: list(sympy.utilities.iterables.multiset_permutations(iterable(z, make_digits = True)))
-	),
 	'Œ?': attrdict(
 		arity = 1,
 		ldepth = 0,
@@ -2422,7 +2418,6 @@ atoms = {
 	),
 	'Œɠ': attrdict(
 		arity = 1,
-		ldepth = 1,
 		call = group_lengths
 	),
 	'œ?': attrdict(
