@@ -2277,6 +2277,11 @@ atoms = {
 		arity = 1,
 		call = is_palindrome
 	),
+	'Œḃ': attrdict(
+		arity = 1,
+		ldepth = 0,
+		call = lambda z: (z + 1) % 2
+	),
 	'Œc': attrdict(
 		arity = 1,
 		rdepth = 0,
@@ -2435,6 +2440,14 @@ atoms = {
 	'Œɠ': attrdict(
 		arity = 1,
 		call = group_lengths
+	),
+	'Œ1': attrdict(
+		arity = 1,
+		call = lambda z: [t for t in iterable(z, make_range = True)[::2]]
+	),
+	'Œ2': attrdict(
+		arity = 1,
+		call = lambda z: [t for t in iterable(z, make_range = True)[1::2]]
 	),
 	'œ?': attrdict(
 		arity = 2,
