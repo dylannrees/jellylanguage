@@ -2909,13 +2909,6 @@ quicks = {
 			call = lambda x, y: [monadic_link(links[0], g) for g in split_key(iterable(x, make_digits = True), iterable(y, make_digits = True))]
 		)]
 	),
-	'ɲ': attrdict(
-		condition = lambda links: links,
-		quicklink = lambda links, outmost_links, index: [attrdict(
-			arity = links[0].arity,
-			call = lambda x, y = None: monadic_link(atoms['¬'], variadic_link(links[0], (x, y)))
-		)]
-	),
 	'ɼ': attrdict(
 		condition = lambda links: links,
 		quicklink = lambda links, outmost_links, index: [attrdict(
