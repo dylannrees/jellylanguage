@@ -942,9 +942,13 @@ def shuffle(array):
 	random.shuffle(array)
 	return array
 
-def sparse(link, args, indices):
+def sparse(link, args, indices, indices_literal = False):
 	larg = args[0]
-	indices = [index - 1 if index > 0 else index - 1 + len(larg) for index in iterable(variadic_link(indices, args))]
+	if indices_literal:
+		indices_iterable = indices
+	else:
+		indices_iterable = iterable(variadic_link(indices, args))
+	indices = [index - 1 if index > 0 else index - 1 + len(larg) for index in indices_iterable]
 	ret = iterable(variadic_link(link, args))
 	return [ret[t % len(ret)] if t in indices else u for t, u in enumerate(larg)]
 
@@ -2958,6 +2962,13 @@ quicks = {
 			call = lambda x = None, y = None: while_loop(links[0], links[1], (x, y), cumulative = True)
 		)]
 	),
+	'ÐE': attrdict(
+		condition = lambda links: links,
+		quicklink = lambda links, outmost_links, index: [attrdict(
+			arity = max(1, links[0].arity),
+			call = lambda x, y = None: sparse(links[0], (x, y), range(0, len(x), 2), indices_literal = True)
+		)]
+	),
 	'Ðf': attrdict(
 		condition = lambda links: links,
 		quicklink = lambda links, outmost_links, index: [attrdict(
@@ -3005,6 +3016,13 @@ quicks = {
 		quicklink = lambda links, outmost_links, index: [attrdict(
 			arity = links[0].arity,
 			call = lambda x, y = None: extremes(max, links[0], (x, y))
+		)]
+	),
+	'ÐO': attrdict(
+		condition = lambda links: links,
+		quicklink = lambda links, outmost_links, index: [attrdict(
+			arity = max(1, links[0].arity),
+			call = lambda x, y = None: sparse(links[0], (x, y), range(1, len(x) + 1, 2), indices_literal = True)
 		)]
 	),
 }
