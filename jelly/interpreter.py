@@ -944,11 +944,11 @@ def shuffle(array):
 
 def sparse(link, args, indices, indices_literal = False):
 	larg = args[0]
-	if indices_literal:
-		indices_iterable = indices
-	else:
-		indices_iterable = iterable(variadic_link(indices, args))
-	indices = [index - 1 if index > 0 else index - 1 + len(larg) for index in indices_iterable]
+	print(list(indices))
+	if not indices_literal:
+		indices = iterable(variadic_link(indices, args))
+	indices = [index - 1 if index > 0 else index - 1 + len(larg) for index in indices]
+	print(indices)
 	ret = iterable(variadic_link(link, args))
 	return [ret[t % len(ret)] if t in indices else u for t, u in enumerate(larg)]
 
@@ -2277,11 +2277,6 @@ atoms = {
 		arity = 1,
 		call = is_palindrome
 	),
-	'Œḃ': attrdict(
-		arity = 1,
-		ldepth = 0,
-		call = lambda z: (z + 1) % 2
-	),
 	'Œc': attrdict(
 		arity = 1,
 		rdepth = 0,
@@ -2320,6 +2315,10 @@ atoms = {
 		arity = 1,
 		call = lambda z: list(enumerate_md(z))
 	),
+	'Œe': attrdict(
+		arity = 1,
+		call = lambda z: [t for t in iterable(z, make_range = True)[1::2]]
+	),
 	'ŒG': attrdict(
 		arity = 1,
 		ldepth = 1,
@@ -2338,11 +2337,6 @@ atoms = {
 		arity = 1,
 		call = lambda z: split_evenly(iterable(z, make_range = True), 2)
 	),
-	'ŒỊ': attrdict(
-		arity = 1,
-		ldepth = 0,
-		call = lambda z: int(abs(z) > 1)
-	),
 	'œị': attrdict(
 		arity = 2,
 		ldepth = 1,
@@ -2360,6 +2354,10 @@ atoms = {
 	'ŒM': attrdict(
 		arity = 1,
 		call = maximal_indices_md
+	),
+	'Œo': attrdict(
+		arity = 1,
+		call = lambda z: [t for t in iterable(z, make_range = True)[::2]]
 	),
 	'ŒP': attrdict(
 		arity = 1,
@@ -2445,14 +2443,6 @@ atoms = {
 	'Œɠ': attrdict(
 		arity = 1,
 		call = group_lengths
-	),
-	'Œ1': attrdict(
-		arity = 1,
-		call = lambda z: [t for t in iterable(z, make_range = True)[::2]]
-	),
-	'Œ2': attrdict(
-		arity = 1,
-		call = lambda z: [t for t in iterable(z, make_range = True)[1::2]]
 	),
 	'œ?': attrdict(
 		arity = 2,
@@ -2921,6 +2911,13 @@ quicks = {
 			call = lambda x, y: [monadic_link(links[0], g) for g in split_key(iterable(x, make_digits = True), iterable(y, make_digits = True))]
 		)]
 	),
+	'ɲ': attrdict(
+		condition = lambda links: links,
+		quicklink = lambda links, outmost_links, index: [attrdict(
+			arity = links[0].arity,
+			call = lambda x, y = None: monadic_link(atoms['¬'], variadic_link(links[0], (x, y)))
+		)]
+	),
 	'ɼ': attrdict(
 		condition = lambda links: links,
 		quicklink = lambda links, outmost_links, index: [attrdict(
@@ -2980,11 +2977,11 @@ quicks = {
 			call = lambda x = None, y = None: while_loop(links[0], links[1], (x, y), cumulative = True)
 		)]
 	),
-	'ÐE': attrdict(
+	'Ðe': attrdict(
 		condition = lambda links: links,
 		quicklink = lambda links, outmost_links, index: [attrdict(
 			arity = max(1, links[0].arity),
-			call = lambda x, y = None: sparse(links[0], (x, y), range(0, len(x), 2), indices_literal = True)
+			call = lambda x, y = None: sparse(links[0], (x, y), range(2, len(x) + 2, 2), indices_literal = True)
 		)]
 	),
 	'Ðf': attrdict(
@@ -3036,7 +3033,7 @@ quicks = {
 			call = lambda x, y = None: extremes(max, links[0], (x, y))
 		)]
 	),
-	'ÐO': attrdict(
+	'Ðo': attrdict(
 		condition = lambda links: links,
 		quicklink = lambda links, outmost_links, index: [attrdict(
 			arity = max(1, links[0].arity),
