@@ -2338,6 +2338,11 @@ atoms = {
 		arity = 1,
 		call = lambda z: split_evenly(iterable(z, make_range = True), 2)
 	),
+	'ŒỊ': attrdict(
+		arity = 1,
+		ldepth = 0,
+		call = lambda z: int(abs(z) > 1)
+	),
 	'œị': attrdict(
 		arity = 2,
 		ldepth = 1,
