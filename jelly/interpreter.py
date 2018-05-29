@@ -944,11 +944,9 @@ def shuffle(array):
 
 def sparse(link, args, indices, indices_literal = False):
 	larg = args[0]
-	print(list(indices))
 	if not indices_literal:
 		indices = iterable(variadic_link(indices, args))
 	indices = [index - 1 if index > 0 else index - 1 + len(larg) for index in indices]
-	print(indices)
 	ret = iterable(variadic_link(link, args))
 	return [ret[t % len(ret)] if t in indices else u for t, u in enumerate(larg)]
 
