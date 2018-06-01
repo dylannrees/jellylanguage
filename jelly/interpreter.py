@@ -1326,7 +1326,7 @@ atoms = {
 	'A': attrdict(
 		arity = 1,
 		ldepth = 0,
-		call = lambda z: overload((abs, lambda z: to_case(z, upper = True)), z)
+		call = lambda z: overload((abs, lambda z: z.upper()), z)
 	),
 	'Ȧ': attrdict(
 		arity = 1,
@@ -1388,7 +1388,7 @@ atoms = {
 	'C': attrdict(
 		arity = 1,
 		ldepth = 0,
-		call = lambda z: overload((lambda z: 1 - z, lambda z: to_case(z, swap = True)), z)
+		call = lambda z: overload((lambda z: 1 - z, lambda z: z.swapcase()), z)
 	),
 	'Ċ': attrdict(
 		arity = 1,
@@ -1611,7 +1611,7 @@ atoms = {
 	'N': attrdict(
 		arity = 1,
 		ldepth = 0,
-		call = lambda z: overload((lambda z: -z, lambda z: to_case(z, lower = True)), z)
+		call = lambda z: overload((lambda z: -z, lambda z: z.lower()), z)
 	),
 	'Ṅ': attrdict(
 		arity = 1,
