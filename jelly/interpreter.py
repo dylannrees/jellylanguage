@@ -1326,7 +1326,7 @@ atoms = {
 	'A': attrdict(
 		arity = 1,
 		ldepth = 0,
-		call = abs
+		call = lambda z: overload((abs, lambda z: to_case(z, upper = True)), z)
 	),
 	'Ȧ': attrdict(
 		arity = 1,
@@ -1388,7 +1388,7 @@ atoms = {
 	'C': attrdict(
 		arity = 1,
 		ldepth = 0,
-		call = lambda z: 1 - z
+		call = lambda z: overload((lambda z: 1 - z, lambda z: to_case(z, swap = True)), z)
 	),
 	'Ċ': attrdict(
 		arity = 1,
@@ -1527,12 +1527,12 @@ atoms = {
 	'İ': attrdict(
 		arity = 1,
 		ldepth = 0,
-		call = lambda z: div(1, z)
+		call = lambda z: overload((lambda z: div(1, z), lambda z: chr(ord(z) + 1)), z)
 	),
 	'Ị': attrdict(
 		arity = 1,
 		ldepth = 0,
-		call = lambda z: int(abs(z) <= 1)
+		call = lambda z: overload((lambda z: int(abs(z) <= 1), lambda z: chr(ord(z) - 1)), z)
 	),
 	'J': attrdict(
 		arity = 1,
@@ -1611,7 +1611,7 @@ atoms = {
 	'N': attrdict(
 		arity = 1,
 		ldepth = 0,
-		call = lambda z: -z
+		call = lambda z: overload((lambda z: -z, lambda z: to_case(z, lower = True)), z)
 	),
 	'Ṅ': attrdict(
 		arity = 1,
@@ -1840,6 +1840,11 @@ atoms = {
 		arity = 1,
 		call = zip_ragged
 	),
+	'Ẓ': attrdict(
+		arity = 1,
+		ldepth = 0,
+		call = lambda z: overload((lambda z: int(sympy.primetest.isprime(z)), lambda z: code_page.index(z) + 1), z)
+	),
 	'Ż': attrdict(
 		arity = 1,
 		call = lambda z: [0] + iterable(z, make_range = True)
@@ -1860,7 +1865,7 @@ atoms = {
 	'Ä': attrdict(
 		arity = 1,
 		ldepth = 1,
-		call = lambda z: list(itertools.accumulate(z))
+		call = lambda z: [t if type(t) != str else list(t) for t in itertools.accumulate(z)]
 	),
 	'!': attrdict(
 		arity = 1,
@@ -1985,12 +1990,12 @@ atoms = {
 	'‘': attrdict(
 		arity = 1,
 		ldepth = 0,
-		call = lambda z: z + 1
+		call = lambda z: overload((lambda z: z + 1, lambda z: code_page[(code_page.index(z) + 1) % 256]), z)
 	),
 	'’': attrdict(
 		arity = 1,
 		ldepth = 0,
-		call = lambda z: z - 1
+		call = lambda z: overload((lambda z: z - 1, lambda z: code_page[(code_page.index(z) - 1) % 256]), z)
 	),
 	'«': attrdict(
 		arity = 2,
@@ -3096,7 +3101,6 @@ hypers = {
 
 quicks['Ƈ'] = quicks['Ðf']
 hypers['Ɱ'] = hypers['Ð€']
-atoms ['Ẓ'] = atoms ['ÆP']
 
 chain_separators = {
 	'ø': (0, '', True),
